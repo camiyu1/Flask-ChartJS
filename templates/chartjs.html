@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <style>
+      #chart-wrapper {
+        display: inline-block;
+        position: relative;
+        width: 50%;
+      }
+    </style>
+    <div id="chart-wrapper">
+      <canvas id="myChart"></canvas>
+    </div>
+    <script>
+      var ctx = document.getElementById('myChart');
+      var getData = $.get("/data");
+
+      getData.done(function(results) {
+        var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            datasets: [{label:"Expense", data: results.expense, borderColor: 'rgb(75, 192, 192)', fill:false}, 
+                       {label:"Income", data: results.income, borderColor: 'rgb(192, 75, 192)', fill:false}],
+            labels: results.period
+          },
+          options: {
+
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
